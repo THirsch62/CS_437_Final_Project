@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>Sleep Tracker</title>
+    </header>
+    <body>
+        <form method="Post">
+            <ul>
+            {% for item in sleep_data %}
+                <li><button type="submit" value={{item.sleep_no}} name={{item.sleep_no}}>{{item.sleep_no}}: slept for {{item.sleep_duration}}</button></li>
+            {% endfor %}
+            </ul>
+        </form>
+        
+        
+
+        <form method="POST">
+            <button type="submit" value="Hello" name="hello_button">whatup my dude</button>
+        </form>
+    </body>
+</html>
