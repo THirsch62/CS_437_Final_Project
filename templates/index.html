@@ -13,8 +13,13 @@
             </ul>
         </form>
         
-        <img id='image1' src={{ url_for('get_image', filename=sleep_image_path) }}>
-        <img id='image2' src={{ url_for('get_image', filename=pos_image_path) }}>
+        <div>
+            <img id='image1' src={{ url_for('get_image', filename=sleep_image_path) }}>
+            <img id='image2' src={{ url_for('get_image', filename=pos_image_path) }}>
+        </div>
+        <div>
+            <img id='image3' src={{ url_for('get_image', filename=sleep_efficiency_image_path) }}>
+        </div>
         <p>Sleep duration: {{sleep_duration}}</p>
         <p>Deep sleep percent: {{deep_sleep_percent}}</p>
         <p>Restless sleep percent: {{restless_sleep_percent}}</p>
@@ -25,6 +30,7 @@
             function updateImages() {
                 document.getElementById('image1').src = '/images/sleep_image.png?' + new Date().getTime();
                 document.getElementById('image2').src = '/images/pos_image.png?' + new Date().getTime();
+                document.getElementById('image3').src = '/images/sleep_efficiency_image.png?' + new Date().getTime();
             }
     
             // Call updateImages() when the page is loaded

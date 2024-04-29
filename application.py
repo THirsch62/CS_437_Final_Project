@@ -41,8 +41,8 @@ def page_loader():
         restless_sleep_percent = y_counts[1] / sleep_duration
         awake_percent = y_counts[2] / sleep_duration
 
-        right = pos_counts[0] / sleep_duration
-        left = pos_counts[2] / sleep_duration
+        left = pos_counts[0] / sleep_duration
+        right = pos_counts[2] / sleep_duration
         middle = pos_counts[1] / sleep_duration
 
         plt.plot(x, y)
@@ -59,6 +59,11 @@ def page_loader():
         plt.savefig("images/pos_image.png")
         plt.clf()
 
+        plt.pie([deep_sleep_percent, restless_sleep_percent, awake_percent], labels=["Deep Sleep", "Restless Sleep", "Awake"], autopct='%1.0f%%')
+        plt.title("Sleep Efficiency")
+        plt.savefig("images/sleep_efficiency_image.png")
+        plt.clf()
+
         # get sleep_duration
         hours = sleep_duration // (60 * 60)
         sleep_duration -= hours * (60 * 60)
@@ -72,6 +77,7 @@ def page_loader():
             sleep_data=get_entries(),
             sleep_image_path="sleep_image.png",
             pos_image_path="pos_image.png",
+            sleep_efficiency_image_path="sleep_efficiency_image.png",
             sleep_duration=str(sleep_duration),
             deep_sleep_percent=str(round(deep_sleep_percent*100, 2)) + "%",
             restless_sleep_percent=str(round(restless_sleep_percent*100, 2)) + "%",
@@ -83,6 +89,7 @@ def page_loader():
         sleep_data=get_entries(),
         sleep_image_path="",
         pos_image_path="",
+        sleep_efficiency_image_path="sleep_efficiency_image.png",
         sleep_duration="",
         deep_sleep_percent="",
         restless_sleep_percent="",
