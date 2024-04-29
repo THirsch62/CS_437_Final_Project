@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import json
+import datetime
 
 from utils import *
 
@@ -20,18 +21,14 @@ def potential_disturbance(sleep):
 
     return True
 
-# with open('sleeps.json', 'r') as f:
-#     sleep_data = json.load(f)
-
-sleep = {
-    'time': 10,
-    'efficiency': 100
-}
+with open('sleeps.json', 'r') as f:
+    sleep_data = json.load(f)
 
 try:
     while True:
         current_state = get_current_state()
         x, y = [], []   # y: 0=deep sleep, 1=restless sleep, 2=awake
+        pos = []        # 0=right, 1=middle, 2=left
         t = 0
 
         if not pillow_in_use(current_state):
@@ -44,16 +41,31 @@ try:
             x.append(t)
             t += 1
 
-            if (next_state[0] < 0.2 and next_state[1] < 0.2):   # awake
+            if (next_state[0] < 0.05) and (next_state[1] < 0.05):   # awake
                 y.append(2)
             elif left + right < 0.2:                            # deep sleep
                 y.append(0)
             else:                                               # restless sleep
                 y.append(1)
 
+            if (next_state[0] > 0.5) and (next_state[1] < 0.5):
+                pos.append(0)
+            elif (next_state[0] < 0.5) and (next_state[1] > 0.5):
+                pos.append(2)
+            else:
+                pos.append(1)
+
             current_state = next_state
         
         x, y = x[:-MAX_AWAKE_TIME], y[:-MAX_AWAKE_TIME]
+
+        current_sleep_data = {
+            'x': x,
+            'y': y,
+            'pos': pos,
+        }
+
+        sleep_data[str(datetime.datetime.now())] = current_sleep_data
 
         plt.plot(x, y)
         plt.savefig("sleep.png")

@@ -4,18 +4,32 @@
         <title>Sleep Tracker</title>
     </header>
     <body>
+        <h3>Sleep Logs</h3>
         <form method="Post">
             <ul>
             {% for item in sleep_data %}
-                <li><button type="submit" value={{item.sleep_no}} name={{item.sleep_no}}>{{item.sleep_no}}: slept for {{item.sleep_duration}}</button></li>
+                <li><button type="submit" value={{item}} name='submit_button'>{{item.replace("_", " ")}}</button></li>
             {% endfor %}
             </ul>
         </form>
         
-        
+        <img id='image1' src={{ url_for('get_image', filename=sleep_image_path) }}>
+        <img id='image2' src={{ url_for('get_image', filename=pos_image_path) }}>
+        <p>Sleep duration: {{sleep_duration}}</p>
+        <p>Deep sleep percent: {{deep_sleep_percent}}</p>
+        <p>Restless sleep percent: {{restless_sleep_percent}}</p>
+        <p>Awake percent: {{awake_percent}}</p>
 
-        <form method="POST">
-            <button type="submit" value="Hello" name="hello_button">whatup my dude</button>
-        </form>
+        <script>
+            // Function to update image source
+            function updateImages() {
+                document.getElementById('image1').src = '/images/sleep_image.png?' + new Date().getTime();
+                document.getElementById('image2').src = '/images/pos_image.png?' + new Date().getTime();
+            }
+    
+            // Call updateImages() when the page is loaded
+            window.onload = updateImages;
+        </script>
+
     </body>
 </html>
